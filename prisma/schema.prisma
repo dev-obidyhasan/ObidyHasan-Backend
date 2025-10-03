@@ -55,6 +55,7 @@ model Project {
   technologies String[]
   type        ProjectType @default(PERSONAL)
   projectUrl  String?
+  viewCount  Int      @default(0)
   frontendRepoUrl String?
   backendRepoUrl String?
   createdAt   DateTime @default(now())
@@ -67,6 +68,7 @@ model Blog {
   content   String
   tags      String[]
   imgUrl    String[]
+  viewCount  Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
