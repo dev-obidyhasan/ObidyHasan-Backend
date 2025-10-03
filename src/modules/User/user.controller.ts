@@ -1,15 +1,19 @@
+import httpStatus from "http-status-codes";
 import { Request, Response } from "express";
 import { UserService } from "./user.service";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
 
-const getUser = async (req: Request, res: Response) => {
-  try {
-    const result = await UserService.getUser(req?.query?.email as string);
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
+const getSingleUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserService.getSingleUser(req?.query?.email as string);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Get user in successfully",
+    data: result,
+  });
+});
 
 export const UserController = {
-  getUser,
+  getSingleUser,
 };
