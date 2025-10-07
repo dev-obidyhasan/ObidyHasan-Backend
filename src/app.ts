@@ -1,19 +1,25 @@
 import compression from "compression";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
-import { UserRoute } from "./modules/User/user.route";
-import { AuthRoute } from "./modules/Auth/auth.route";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 import notFound from "./middlewares/notFound";
+import cookieParser from "cookie-parser";
+import { router } from "./routers";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 app.use(compression());
 app.use(express.json());
+app.use(cookieParser());
+app.set("trust proxy", 1);
 
-app.use("/api/v1/auth", AuthRoute);
-app.use("/api/v1/user", UserRoute);
+app.use("/api/v1", router);
 
 app.use(
   cors({

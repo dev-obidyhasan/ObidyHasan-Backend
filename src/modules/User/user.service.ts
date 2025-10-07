@@ -6,6 +6,14 @@ const getSingleUser = async (email: string) => {
   });
 };
 
+const updateUser = async (email: string, data: any) => {
+  return await prisma.profile.update({
+    where: { email: email },
+    data: data,
+  });
+};
+
 export const UserService = {
   getSingleUser,
+  updateUser,
 };
