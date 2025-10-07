@@ -16,7 +16,7 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
 
 const updateUser = catchAsync(async (req: Request, res: Response) => {
   const result = await UserService.updateUser(
-    req?.query?.email as string,
+    Number(req?.params?.id),
     req.body
   );
   sendResponse(res, {

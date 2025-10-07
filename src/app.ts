@@ -12,6 +12,8 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(compression());
@@ -20,13 +22,6 @@ app.use(cookieParser());
 app.set("trust proxy", 1);
 
 app.use("/api/v1", router);
-
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  })
-);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Obidy Hasan Naim Server Is Running.");

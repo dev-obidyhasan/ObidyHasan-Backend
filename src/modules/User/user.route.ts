@@ -4,6 +4,6 @@ import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "@prisma/client";
 
 const router = Router();
-router.get("/", checkAuth(Role.ADMIN), UserController.getSingleUser);
-router.patch("/", checkAuth(), UserController.updateUser);
+router.get("/", UserController.getSingleUser);
+router.patch("/:id", checkAuth(Role.ADMIN), UserController.updateUser);
 export const UserRoute = router;
