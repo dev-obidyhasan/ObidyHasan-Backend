@@ -12,8 +12,19 @@ const getAllProjects = async () => {
 };
 
 const getSingleProject = async (projectId: number) => {
-  return await prisma.project.findUnique({
-    where: { id: projectId },
+  return await prisma.$transaction(async (tx) => {
+    await tx.project.update({
+      where: { id: projectId },
+      data: {
+        viewCount: {
+          increment: 1,
+        },
+      },
+    });
+
+    return await tx.project.findUnique({
+      where: { id: projectId },
+    });
   });
 };
 
