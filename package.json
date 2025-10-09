@@ -10,7 +10,8 @@
     "start": "node dist/server.js",
     "prisma-migrate": "prisma migrate dev",
     "prisma-reset": "prisma migrate reset",
-    "prisma-generate": "prisma generate"
+    "prisma-generate": "prisma generate",
+    "postinstall": "prisma generate --no-engine"
   },
   "keywords": [],
   "author": "",
