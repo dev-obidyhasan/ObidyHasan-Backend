@@ -13,13 +13,13 @@ const loginWithEmailAndPassword = catchAsync(
       password,
     });
 
-    setAuthCookie(res, result, email);
+    // setAuthCookie(res, result, email);
 
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
       message: "Logged in successfully",
-      data: { accessToken: result.accessToken },
+      data: { accessToken: result.accessToken, email },
     });
   }
 );
