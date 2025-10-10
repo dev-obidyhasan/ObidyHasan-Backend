@@ -1,27 +1,30 @@
 import { Response } from "express";
 
-export interface AuthToken {
-  accessToken?: string;
-}
-
-export const setAuthCookie = (
+export function setAuthCookie(
   res: Response,
-  tokenInfo: AuthToken,
+  tokenInfo: { accessToken?: string },
   email: string
-) => {
+) {
+  const isProduction = process.env.NODE_ENV === "production";
+  const cookieDomain = isProduction ? process.env.FRONTEND_URL : undefined;
+
   if (tokenInfo.accessToken) {
     res.cookie("accessToken", tokenInfo.accessToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+      domain: cookieDomain,
+      path: "/",
     });
   }
+
   if (email) {
-    const encodedEmail = Buffer.from(email).toString("base64");
-    res.cookie("email", encodedEmail, {
+    res.cookie("email", email, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+      domain: cookieDomain,
+      path: "/",
     });
   }
-};
+}

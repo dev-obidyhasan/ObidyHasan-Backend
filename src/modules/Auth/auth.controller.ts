@@ -19,7 +19,7 @@ const loginWithEmailAndPassword = catchAsync(
       success: true,
       statusCode: httpStatus.OK,
       message: "Logged in successfully",
-      data: null,
+      data: { accessToken: result.accessToken },
     });
   }
 );
